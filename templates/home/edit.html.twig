@@ -1,0 +1,12 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Create{% endblock %}
+
+{% block body %}
+<div class="container">
+	{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<input class="btn btn-primary" type="submit" value="Edit">
+	{{ form_end(form) }}
+</div>
+{% endblock %}	

@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="text-center h3 mt-3">
+	{% for user in users %}
+		<p>{{ user.username }}</p>
+	{% endfor %}
+</div>
+
+{% endblock %}

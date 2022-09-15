@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Create{% endblock %}
+
+{% block body %}
+
+{{ include('layouts/_flash_message.html.twig') }}
+
+<div class="container mt-5">
+
+<h1>{{ post.title }}</h1>
+<p>{{ post.message }}</p>
+<small>{{ post.author }} - {{ post.postAt|date("l d F - H:i") }}  
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('app_delete', {'id': post.id}) }}"> Delete</a>
+	{% endif %}
+	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+		{% if post.author == app.user.username %}
+			<a href="{{ path('app_delete', {'id': post.id}) }}"> Delete</a>
+			<a href="{{ path('app_edit', {'id': post.id}) }}">- Edit</a>
+		{% endif %}
+	{% endif %}
+</small>
+
+<hr>
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+<h2>Commentaires ({{ comments|length }}) - Ajouter un commentaire</h2>
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<input type="submit" value="envoyer" formnovalidate>
+{{ form_end(form) }}
+{% else %}
+<h2>Commentaires ({{ comments|length }})</h2>
+<p><a href="{{ path('app_register') }}">Sign in or login</a> to comment</p>
+{% endif %}
+
+<hr>
+	{% for comments in comments|sort|reverse %}	
+		<h4>{{ comments.author }}</h4>
+		<p>{{ comments.comment }}</p>
+		<small>{{ comments.postAt|date("l d F - H:i") }}</small>
+		<hr>
+	{% endfor %}
+
+	
+
+</div>	
+
+{% endblock %}	

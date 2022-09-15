@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block body %}
+
+{{ include('layouts/_flash_message.html.twig') }}
+
+<div class="container">
+	<h1 class="h3 mt-5">Forums</h1>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('app_newForum') }}" class="h5">Nouveau Forum</a>
+	{% endif %}
+	{% for forums in forums %}
+		<table class="table table-bordered">
+		  <thead>
+		    <tr>
+		      <th scope="col">{{ forums.title }} {% if is_granted('ROLE_ADMIN')%}<a href="{{ path('app_subject_create') }}">- Nouveau sujet</a>{% endif %}</th>
+		    </tr> 
+		  </thead>
+		  <tbody>
+		  {% for subjects in subjects %}
+		    <tr>
+		   	  {% if subjects.forum == forums.id %}
+			      <td><a href="{{ path('app_subject', {'id': subjects.id }) }}">{{ subjects.title }}</a></td>
+			  {% endif %}
+		    </tr>
+		  {% endfor %} 
+		  </tbody>
+		</table>
+	{% endfor %}
+</div>
+<hr style="margin: auto; margin-top: 50px;">
+
+
+
+{% endblock %}
